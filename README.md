@@ -106,6 +106,84 @@ python manage.py migrate
 >>> fav = Favorite.objects.for_object(song)
 ```
 
+## Graphql
+
+In `settings.py`, map your grahene queries to your django models
+
+```python
+FAV_MODELS = {
+    'CurrentUser': 'core.user',
+    'User': 'core.user',
+    'Track': 'listen.Track',
+}
+```
+
+Add `url_renditions.graphql_schema.Query` to your root query and mutation.
+```python
+import graphene
+import fav.graphql_schema
+
+class Query(
+        ...
+        fav.graphql_schema.Query,
+        graphene.ObjectType):
+    pass
+
+class Mutation(
+        ...
+        fav.graphql_schema.Mutation,
+        graphene.ObjectType):
+    pass
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
+
+```
+
+### Query
+
+Then, you can ask for:
+
+```graphql
+query {
+  isInUserFavorites(objectId: "VHJhY2s6OA==")
+}
+```
+
+and you get
+
+```json
+{
+  "data": {
+    "isInUserFavorites": false
+  }
+}
+```
+
+### Mutation
+
+```graphql
+mutation {
+  favorite(input: {objectId: "VHJhY2s6OA=="}) {
+    deleted
+    created
+  }
+}
+```
+
+and you get
+
+```json
+{
+  "data": {
+    "favorite": {
+      "deleted": null,
+      "created": true,
+    }
+  }
+}
+```
+
 ## Thanks
 
 * This apps was based on the fork: https://github.com/gengue/django-favs which is based on the fork of https://github.com/streema/django-favit by streema.
