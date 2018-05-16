@@ -1,5 +1,5 @@
 env/
 *.pyc
 dist/
-django_url_renditions.egg-info/
+django_fav.egg-info/
 .vscode/
