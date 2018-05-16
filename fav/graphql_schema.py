@@ -1,13 +1,16 @@
 import graphene
 from .models import Favorite as FavoriteModel
 from graphql_relay.node.node import from_global_id
+from django.apps import apps
+from graphql_schema import Query
 
 
-MAP_MODELS = {
-    'Track': 'listen.track',
-    'CurrentUser': 'core.user',
-    'User': 'core.user',
-}
+FIELDS = [f for f in  Query._meta.fields.values() if hasattr(f._type, '_meta') and hasattr(f.type._meta, 'model')]
+MAP_MODELS = {f._type._meta.name: '{}.{}'.format(f.type._meta.model._meta.app_label, f.type._meta.model._meta.model_name) for f in FIELDS}
+# MAP_MODELS = {
+#     'CurrentUser': 'core.user',
+#     'User': 'core.user',
+# }
 
 
 class Query(object):

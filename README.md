@@ -1,12 +1,14 @@
-# django-favs
+# django-fav
 
 A simple reusable app for django that makes it easy to deal with faving
 and unfaving any object from any application.
 
+It comes with a Graphene (GraphQL) Query to enable favs in your queries.
+
 ## Requirements
 
 * Python 3.4+
-* Django 1.9+
+* Django 1.11
 
 
 ## Installation
@@ -20,7 +22,7 @@ pip install django-fav
 ```python
 INSTALLED_APPS = [
   ...
-  "favs",
+  "fav",
   ...
 ]
 ```
@@ -106,5 +108,5 @@ python manage.py migrate
 
 ## Thanks
 
-* This apps was based on the fork: https://github.com/streema/django-favit by streema.
+* This apps was based on the fork: https://github.com/gengue/django-favs which is based on the fork of https://github.com/streema/django-favit by streema.
 
