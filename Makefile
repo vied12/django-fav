@@ -2,4 +2,4 @@ build:
 	python setup.py sdist
 
 deploy:
-	twine upload dist/*
+	twine upload --skip-existing dist/*
